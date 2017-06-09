@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Traffic layer</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    
+    #map {
+      height: 100%;
+      display: block;
+    }
+    
+    #map2,
+    #map3 {
+      height: 100%;
+      display: block;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+  <div id="map2">
+    <img name="imageTwo" src="https://s.w-x.co/staticmaps/us_radar_plus_usen_1280x720.jpg">
+  </div>
+  <div id="map3">
+    <img name="imageThree" src="https://s.w-x.co/staticmaps/acttemp_1280x720.jpg">
+  </div>
+  <script>
+    var i = 0;
+
+    function swap() {
+      var d = new Date();
+
+      if (d.getHours() == 16 || d.getHours() == 17) {
+        if (i == 0) {
+          document.getElementById("map").style.display = "block";
+          document.getElementById("map2").style.display = "none";
+          document.getElementById("map3").style.display = "none";
+          i = 1;
+        } else if (i == 1) {
+          document.getElementById("map").style.display = "none";
+          document.getElementById("map2").style.display = "block";
+          document.getElementById("map3").style.display = "none";
+          i = 10;
+        } else {
+          document.getElementById("map").style.display = "none";
+          document.getElementById("map2").style.display = "none";
+          document.getElementById("map3").style.display = "block";
+
+          i = 0;
+        }
+      } else {
+
+        if (i == 0) {
+          document.getElementById("map").style.display = "none";
+          document.getElementById("map2").style.display = "block";
+          document.getElementById("map3").style.display = "none";
+          i = 1;
+        } else {
+          document.getElementById("map").style.display = "none";
+          document.getElementById("map2").style.display = "none";
+          document.getElementById("map3").style.display = "block";
+          i = 0;
+        }
+      }
+      setTimeout("swap()", 20000);
+    }
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: {
+          lat: 44.2847408,
+          lng: -88.4477127
+        }
+      });
+
+      var trafficLayer = new google.maps.TrafficLayer();
+      trafficLayer.setMap(map);
+
+    }
+
+    window.onload = swap;
+    setTimeout(function() {
+      window.location.reload(1);
+    }, 300000);
+
+  </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFbrrmgepsrpnT8DfoNgjyp6Icv7SJ4hs&callback=initMap">
+
+
+  </script>
+
+
+</body>
+
+</html>
